@@ -1,0 +1,22 @@
+Reflection Questions
+====
+1. Describe your experience/confidence in completing this project in 2 to 3 sentences.
+   Overall, this project was a nice refresher of DSA fundamentals related to handling arrays. I feel very confident in my technical ability to complete future assignments in CS 300. 
+
+2. As you were working on the program, did you find yourself frequently stuck and not knowing how to
+   continue? Did you look up a solution or get significant help from someone in order to continue or
+   complete the project?  (If so, you may not be ready for CS 300.)
+   I was not stuck when implementing the Java classes for this assignment.
+
+3. What was the most challenging part of writing this program and what did you do to overcome that 
+   challenge?
+   There really wasn't that much of a challenge for this program. I mainly drew from previous experiences, such as writing an entire algorithms library in Python and programming languages in C, to get this assignment done.
+4. Did you try the test-driven development approach? If so, what did you think? If not, why did you 
+   choose not to? 
+   I did try test-driven development, and I really liked reinforcing my implementation and knowing what to do by throwing in little cases to test small chunks of my code.
+ 
+5. Describe a debugging technique you used to identify and fix a problem in your code.
+   I used the CartUtilitiesTester class and visual inspection through printing array contents in order to resolve issues, such as array contents not saving, in my code. 
+
+====
+***Remember to submit this file to Gradescope along with your Java code!***
