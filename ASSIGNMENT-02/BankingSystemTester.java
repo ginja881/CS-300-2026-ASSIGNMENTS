@@ -1,11 +1,18 @@
-//TODO file header comment
+/*
+* Author: Joseph Carter
+* Email: jtcarter5@wisc.edu
+* Course: CS 300, Fall 2026
+* Assignment: Assignment 03
+* Citations: None
+*/
 
 /** 
  * This contains test cases to comprehensively test the BankAccount and BankingSystem 
  * classes.
  * @author Jim Williams and Hobbes
- * @author YOUR NAME ONCE YOU CONTRIBUTE
+ * @author Joseph Carter
  */
+
 public class BankingSystemTester {
 
   /**
@@ -83,11 +90,21 @@ public class BankingSystemTester {
 
   public static boolean testBankAccountConstructorInvalidAccountNumber() {
     System.out.print("testBankAccountConstructorInvalidAccountNumber ");
-    
-    // TODO: Complete this test
-    
-    System.out.println("TODO: Complete this test");
-    return false;
+    /*
+    Create account with invalid account number
+    and see if it raises invalid account exception
+    */
+    try {
+      new BankAccount("1234567", "John Doe", 100.0);
+      System.out.println("FAIL");
+      return false;
+    } catch (InvalidAccountException e) {
+      System.out.println("PASS");
+      return true;
+    } catch (Exception e) {
+      System.out.println("FAIL");
+      return false;
+    }
   }
 
   public static boolean testBankAccountConstructorNullName() {
@@ -108,19 +125,42 @@ public class BankingSystemTester {
   public static boolean testBankAccountConstructorEmptyName() {
     System.out.print("testBankAccountConstructorEmptyName ");
     
-    // TODO: Complete this test
+    /*
+    Create account with empty name and test to see if an
+    IllegalArgumentException is raised
+    */
+    try {
+      new BankAccount("12345678", "", 100.0);
+      System.out.println("FAIL");
+      return false;
+    } catch (IllegalArgumentException e) {
+      System.out.println("PASS");
+      return true;
+    } catch (Exception e) {
+      System.out.println("FAIL");
+      return false;
+    }
     
-    System.out.println("TODO: Complete this test");
-    return false;
   }
 
   public static boolean testBankAccountConstructorNegativeBalance() {
     System.out.print("testBankAccountConstructorNegativeBalance ");
     
-    // TODO: Complete this test
-    
-    System.out.println("TODO: Complete this test");
-    return false;
+    /*
+    Test to see if creating an account with negative initial balance raises
+    an IllegalArgumentException
+    */
+    try {
+      new BankAccount("12345678", "John Doe", -100.0);
+      System.out.println("FAIL");
+      return false;
+    } catch (IllegalArgumentException e) {
+      System.out.println("PASS");
+      return true;
+    } catch (Exception e) {
+      System.out.println("FAIL");
+      return false;
+    }
   }
 
   // =================== BankAccount Deposit Tests ===================
@@ -146,11 +186,27 @@ public class BankingSystemTester {
 
   public static boolean testDepositNegativeAmount() {
     System.out.print("testDepositNegativeAmount ");
+    /*
+    Make account before deposit (account constructor i
+    s assumed to be correct because of test evaluation order)
+    Then, test deposit with negative amount to see if it
+    raises an IllegalArgumentException
+    */
+
+    BankAccount accountOne = new BankAccount("12345678", "John Doe", 100.0);
+    try {
+      accountOne.deposit(-10.0);
+      System.out.println("FAIL");
+    } catch (IllegalArgumentException e) {
+      System.out.println("PASS");
+      return true;
+    } catch (Exception e) {
+      System.out.println("FAIL");
+      return false;
+    }
     
-    // TODO: Complete this test
-    
-    System.out.println("TODO: Complete this test");
     return false;
+
   }
 
   // =================== BankAccount Withdraw Tests ===================
@@ -176,20 +232,53 @@ public class BankingSystemTester {
 
   public static boolean testWithdrawNegativeAmount() {
     System.out.print("testWithdrawNegativeAmount ");
-    
-    // TODO: Complete this test
-    
-    System.out.println("TODO: Complete this test");
-    return false;
+    /*
+    Make account before negative withdrawal (
+    account constructor should be correct by test evaluation order
+    )
+    Test negative withdrawal and see if it raises
+    an IllegalArgumentException
+    */
+
+    BankAccount accountOne = new BankAccount("12345678", "John Doe", 100.0);
+
+    try {
+      accountOne.withdraw(-10.0);
+      System.out.println("FAIL");
+      return false;
+    } catch (IllegalArgumentException e) {
+      System.out.println("PASS");
+      return true;
+    } catch (Exception e) {
+      System.out.println("FAIL");
+      return false;
+    }
+  
   }
 
   public static boolean testWithdrawInsufficientFunds() {
     System.out.print("testWithdrawInsufficientFunds ");
-    
-    // TODO: Complete this test
-    
-    System.out.println("TODO: Complete this test");
-    return false;
+    /*
+    Make account before insufficient fund withdrawal (
+      Account constructor assumed to be correct because of 
+      test evaluation order
+    )
+    Test insufficient fund withdrawal and see if it raises
+    an InsufficientFundsException
+    */
+    BankAccount accountOne = new BankAccount("12345678", "John Doe", 100.0);
+    try {
+      accountOne.withdraw(1000.0);
+      System.out.println("FAIL");
+      return false;
+    } catch (InsufficientFundsException e) {
+      System.out.println("PASS");
+      return true;
+    } catch (Exception e) {
+      System.out.println("FAIL");
+      return false;
+    }
+
   }
 
   // =============== BankingSystem CreateAccount Tests ===============
@@ -216,10 +305,21 @@ public class BankingSystemTester {
   public static boolean testCreateAccountDuplicate() {
     System.out.print("testCreateAccountDuplicate ");
     
-    // TODO: Complete this test
-    
-    System.out.println("TODO: Complete this test");
-    return false;
+    // Make banking system, make duplicates, and check for InvalidAccountException
+    try {
+      BankingSystem system = new BankingSystem();
+      system.createAccount("12345678", "Smith", 0.0);
+      system.createAccount("12345678", "Smith", 0.0);
+      System.out.println("FAIL");
+      return false;
+    } catch (InvalidAccountException e) {
+      System.out.println("PASS");
+      return true;
+    } catch (Exception e) {
+      System.out.println("FAIL");
+      return false;
+    }
+   
   }
 
   // =============== BankingSystem FindAccount Tests ===============
@@ -246,10 +346,23 @@ public class BankingSystemTester {
   public static boolean testFindAccountNotFound() {
     System.out.print("testFindAccountNotFound ");
     
-    // TODO: Complete this test
-    
-    System.out.println("TODO: Complete this test");
-    return false;
+    /*
+    * Make banking system, create account, look for non existent account, and 
+    * check for InvalidAccountException
+    */
+    BankingSystem system = new BankingSystem();
+    system.createAccount("12345678", "Jane Smith", 200.0);
+    try {
+      system.findAccount("00000000");
+      System.out.println("FAIL");
+      return false;
+    } catch (InvalidAccountException e) {
+      System.out.println("PASS");
+      return true;
+    } catch (Exception e) {
+      System.out.println("FAIL");
+      return false;
+    }
   }
 
   // =============== BankingSystem TransferMoney Tests ===============
@@ -282,10 +395,30 @@ public class BankingSystemTester {
   public static boolean testTransferMoneyNegativeAmount() {
     System.out.print("testTransferMoneyNegativeAmount ");
     
-    // TODO: Complete this test
+    /*
+    Refer to deposit and withdrawal for reason behind
+    creating systems and accounts outside of try block
+    . After creation, test transaction with negative
+    amount and see if it raises
+    an IllegalArgumentException.
+    */
+    BankingSystem system = new BankingSystem();
+    system.createAccount("12345678", "Alice", 300.0);
+    system.createAccount("87654321", "Bob", 100.0);
+
+    try {
+      system.transferMoney("12345678", "87654321", -100.0);
+      System.out.println("FAIL");
+      return false;
+    } catch (IllegalArgumentException e) {
+      System.out.println("PASS");
+      return true;
+    } catch (Exception e) {
+      System.out.println("FAIL");
+      return false;
+    }
     
-    System.out.println("TODO: Complete this test");
-    return false;
+  
   }
 
   public static boolean testTransferMoneySameAccount() {
@@ -345,19 +478,36 @@ public class BankingSystemTester {
   public static boolean testTransferMoneyInsufficientFunds() {
     System.out.print("testTransferMoneyInsufficientFunds ");
     
-    // TODO: Complete this test
-    
-    System.out.println("TODO: Complete this test");
-    return false;
+    /*
+    Refer to previous test cases on 
+    why creation is outside of try block.
+    Test transaction and see if it raises
+    an InsufficientFunds exception.
+    */
+    BankingSystem system = new BankingSystem();
+    system.createAccount("12345678", "Alice", 300.0);
+    system.createAccount("87654321", "Bob", 100.0);
+
+    try {
+      system.transferMoney("12345678", "87654321", 400.0);
+      System.out.println("FAIL");
+      return false;
+    } catch (InsufficientFundsException e) {
+      System.out.println("PASS");
+      return true;
+    } catch (Exception e) {
+      System.out.println("FAIL");
+      return false;
+    }
   }
 
   // =============== BankingSystem DisplayAccountInfo Tests ===============
 
   public static boolean testDisplayAccountInfoValid() {
     System.out.print("testDisplayAccountInfoValid ");
+    BankingSystem system = new BankingSystem();
+    system.createAccount("12345678", "Test User", 500.0);
     try {
-      BankingSystem system = new BankingSystem();
-      system.createAccount("12345678", "Test User", 500.0);
       system.displayAccountInfo("12345678"); // Should not throw exception
       System.out.println("PASS");
       return true;
@@ -369,10 +519,26 @@ public class BankingSystemTester {
 
   public static boolean testDisplayAccountInfoNotFound() {
     System.out.print("testDisplayAccountInfoNotFound ");
+    /*
+    Refer to previous test cases on why 
+    construction is outside of try block.
+    Test for displaying info of non existent account
+    and see if it raises an InvalidAccountException.
+    */
+   
+    BankingSystem system = new BankingSystem();
+
+    try {
+      system.displayAccountInfo("00000000");
+      System.out.println("FAIL");
+      return false;
+    } catch (InvalidAccountException e) {
+      System.out.println("PASS");
+      return true;
+    } catch (Exception e) {
+      System.out.println("FAIL");
+      return false;
+    }
     
-    // TODO: Complete this test
-    
-    System.out.println("TODO: Complete this test");
-    return false;
   }
 }
