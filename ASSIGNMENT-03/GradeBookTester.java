@@ -157,15 +157,58 @@ public class GradeBookTester {
   public static boolean testStudentManagement() {
     System.out.println("Testing student add/find operations...");
     boolean result = true;
-    // TODO: Create GradeBook and add 2 students successfully
+    GradeBook gradeBook = new GradeBook();
+    
+    // Create 2 students and add them
+    try {
+      gradeBook.addStudent(new Student("Joseph Carter", "100"));
+      gradeBook.addStudent(new Student("Teagan Carter", "200"));
+      System.out.println("(PASS) Students were successfully added");
+    } catch (Exception e) {
+      System.out.println("(FAIL) " + e.getMessage());
+      result = false;
+    }
+    
 
-    // TODO: Test finding existing student by ID
+    // Find existing student
+    try {
+      Student josephStudent = gradeBook.findStudent("100");
+      if (josephStudent.getName().equals("Joseph Carter")) {
+        System.out.println("(FAIL) returned different student");
+	result = false;
+      }
 
-    // TODO: Test DuplicateStudentException when adding duplicate ID
+      System.out.println("(PASS) Student was successfully found");
+    } catch (Exception e) {
+      System.out.println("(FAIL) " + e.getMessage());
+      result = false;
+    }
 
-    // TODO: Test StudentNotFoundException when searching non-existent ID
+    // Add duplicate student
+    try {
+      gradeBook.addStudent(new Student("Joseph Carter", "100"));
+      result = false;
+      System.out.println("(FAIL) Did not raise duplicate error");
+    } catch (DuplicateStudentException e) {
+      System.out.println("(PASS) Managed to raise duplicate error");
+    } catch (Exception e) {
+      System.out.println("(FAIL) " + e.getMessage());
+      result = false;
+    }
 
-    return result; // TODO: return return true if all tests pass, false otherwise
+    // Find non-existent student ID
+    try {
+      gradeBook.findStudent("123");
+      System.out.println("(FAIL) Did not raise not found error");
+      result = false;
+    } catch (StudentNotFoundException e) {
+      System.out.println("(PASS) raised not found error");
+    } catch (Exception e) {
+      System.out.println("(FAIL) " + e.getMessage());
+      result = false;
+    }
+
+    return result;
   }
 
   public static boolean testClassAverageCalculation() {
@@ -254,24 +297,37 @@ public class GradeBookTester {
 
     try {
       GradeBook gradeBook = new GradeBook();
+      Student honorsStudent = new Student("Honorful Harry", "252");
+      Student regularStudent = new Student("Regular Rob", "352");
+      Student absentStudent = new Student("Absent Aaron", "452");
       
-      // TODO: Create honors student (avg≥90)
-      
-      // TODO: Create regular student (avg<90)
-      
-      // TODO: Create student with no grades
+      honorsStudent.addGrade(100.0);
+      regularStudent.addGrade(85.0);
+      gradeBook.addStudent(honorsStudent);
+      gradeBook.addStudent(regularStudent);
+      gradeBook.addStudent(absentStudent);
 
-      // TODO: Verify getHonorsStudents() returns exactly 1 student
+     
+      ArrayList<Student> honorsStudents = gradeBook.getHonorsStudent();
 
-      // TODO: Verify correct student is in honors list
+      if (honorsStudent.size() != 1) {
+        System.out.println("(FAIL) Expected honors dynamic array of size 1");
+	result = false;
+      }
+      
+      Student chosenStudent = honorsStudent.get(0);
+      if (!chosenStudent.getStudentId().equals("252")) {
+        System.out.println("(FAIL) Expected studentId 252");
+	result = false;
+      }
 
     } catch (Exception e) {
       System.out.println("Honors identification threw unexpected exception: "
           + e.getMessage());
-      // TODO: Fail test if there was an unexpected exception
+      result = false;
     }
 
-    return false; // TODO: return return true if all tests pass, false otherwise
+    return result;
   }
 
   public static boolean testCompleteWorkflow() {
