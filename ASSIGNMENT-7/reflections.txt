@@ -1,0 +1,11 @@
+Reflection Questions
+
+1. Describe your experience/confidence in completing this project in 2-3 sentences.
+I was confident in my ability to complete this project. I understood concepts related to linked lists.
+
+2. What was the most challenging part of completing this program?
+Mainly thinking about how to make the add() operation, but realizing it can be viewed similar towards swimming and sinking operations for heaps.
+
+3. Compared to using an ArrayList, what do you think are the main advantages and disadvantages of implementing the task list with a linked list?
+Simplicity, linked lists can provide simpler representations of tasks/queues than dynamic arrays.
+
