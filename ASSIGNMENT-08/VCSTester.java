@@ -75,6 +75,7 @@ public class VCSTester {
    * @return true if all tests pass
    */
   public static boolean testStackPushPop() {
+    boolean result = true;
     // Case 1: Push to an empty stack
     try {
       CommitStack stack = new CommitStack();
@@ -95,12 +96,69 @@ public class VCSTester {
       System.out.println("Case 1 failed with exception: " + e);
       return false;
     }
-
-    // TODO
     // Case 2: Push to a non-empty stack
+    try {
+      CommitStack stack = new CommitStack();
+
+      stack.push(
+        new Commit("A Commit", new ArrayList<>(Arrays.asList("main.cpp")))
+      );
+      stack.push(
+        new Commit("Commit", new ArrayList<>(Arrays.asList("main.java")))
+      );
+
+      Commit newCommit =  new Commit("1Commit", new ArrayList<>(Arrays.asList("main.py")))
+      stack.push(
+        newCommit
+      );
+
+      if (!stack.peek().equals(newCommit) && stack.size() != 3) {
+        System.out.println("Case 2 Failed: invalid top");
+        System.out.println("expected " + newCommit.toString());
+        System.out.println("but got " + stack.peek().toString());
+        
+        System.out.println("stack size is " + stack.size());
+        result = false;
+      }
+    } catch (Exception e) {
+      System.out.println("Case 2 failed with exception: " + e);
+    }
+  
     // Case 3: Pop from a non-empty stack
+    try {
+      CommitStack stack = new CommitStack();
+      Commit secondCommit = new Commit(
+        "Commit 2",
+        new ArrayList<>(Arrays.asList("test.txt"))
+      );
+
+      stack.push(
+        new Commit("A Commit", new ArrayList<>(Arrays.asList("main.cpp")))
+      );
+      stack.push(secondCommit);
+
+      Commit commit = stack.pop();
+      
+      if (!commit.equals(secondCommit)) {
+        System.out.println("CASE 3: INVALID TOP");
+        result = false;
+      }
+
+    } catch (Exception e) {
+      System.out.println("Case 3 failed with exception: " + e);
+    }
     // Case 4: Pop from an empty stack
-    return false;
+    try {
+      CommitStack stack = new CommitStack();
+      Commit commit = stack.pop();
+      if (commit != null) {
+        System.out.println("CASE 4: NOT EMPTY STACK");
+        result = false;
+      }
+    } catch (Exception e) {
+      System.out.println("Case 4 failed with exception: " + e);
+    }
+    return result;
   }
 
   /**

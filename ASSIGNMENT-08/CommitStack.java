@@ -36,23 +36,23 @@ public class CommitStack extends LinkedStructure<Commit> implements StackADT<Com
   }
 
   public Commit pop() {
-     if (super.isEmpty()) {
-       return null;
-     }
+    if (super.isEmpty()) {
+      return null;
+    }
 
-     if (super.size() == 1) {
-       LinkedNode<Commit> oldTop = super.head;
-       super.head = null;
-       super.tail = null;
-       super.size--;
-       return oldTop.getData();
-     }
+    if (super.size() == 1) {
+      LinkedNode<Commit> oldTop = super.head;
+      super.head = null;
+      super.tail = null;
+      super.size--;
+      return oldTop.getData();
+    }
 
 
-     LinkedNode<Commit> oldTop = super.head;
-     super.head = super.head.getNext();
-     super.size--;
-     return oldTop.getData();
+    LinkedNode<Commit> oldTop = super.head;
+    super.head = super.head.getNext();
+    super.size--;
+    return oldTop.getData();
   }
   
   public boolean contains(Commit value) {
@@ -62,7 +62,11 @@ public class CommitStack extends LinkedStructure<Commit> implements StackADT<Com
   public void clear() {
     super.clear();
   }
-  
+
+  public Commit peek() {
+    return super.head.getData();
+  }  
+
   private void printAllCommitsNewestHelper(LinkedNode<Commit> currentNode) {
     if (currentNode == null) {
       return;

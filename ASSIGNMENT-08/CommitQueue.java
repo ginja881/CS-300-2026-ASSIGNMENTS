@@ -40,7 +40,7 @@ public class CommitQueue extends LinkedStructure<Commit> implements QueueADT<Com
   
   public Commit dequeue() {
     if (super.isEmpty()) {
-      throw new CommitNotFoundException("TRIED TO DEQUEUE ON EMPTY COMMIT QUEUE");
+      return null;
     }
    
     if (super.size == 1) {
