@@ -107,7 +107,7 @@ public class VCSTester {
         new Commit("Commit", new ArrayList<>(Arrays.asList("main.java")))
       );
 
-      Commit newCommit =  new Commit("1Commit", new ArrayList<>(Arrays.asList("main.py")))
+      Commit newCommit =  new Commit("1Commit", new ArrayList<>(Arrays.asList("main.py")));
       stack.push(
         newCommit
       );
@@ -166,6 +166,8 @@ public class VCSTester {
    * @return true if all tests pass
    */
   public static boolean testQueueEnqueueDequeue() {
+    boolean result = true;
+
     // Case 1: Enqueue to an empty queue
     try {
       CommitQueue queue = new CommitQueue();
@@ -187,11 +189,65 @@ public class VCSTester {
       return false;
     }
 
-    
-    // Case 2: Enqueue to a non-empty queue
+    try {
+      CommitQueue queue = new CommitQueue();
+      Commit front = new Commit("Front commit", new ArrayList<>(Arrays.asList("test1.py", "test2.py")));
+      queue.enqueue(front);
+      
+      queue.enqueue(
+        new Commit("A Commit", new ArrayList<>(Arrays.asList("main.cpp")))
+      );
+      queue.enqueue(
+        new Commit("Commit", new ArrayList<>(Arrays.asList("main.java")))
+      );
+      
+      int expectedSize =  3;
+
+      if (!queue.peek().equals(front) && queue.size() != expectedSize) {
+	System.out.println("CASE 3 FRONT WAS CHANGED");
+	System.out.println("expected " + front.toString());
+	System.out.println("but got " + queue.peek().toString());
+	System.out.println("expected size of 3, got " + queue.size());
+	result = false;
+      }
+
+    } catch (Exception e) {
+      System.out.println("Case 2 failed with exception: " +  e);
+      result = false;
+    }
+
+
     // Case 3: Dequeue from a non-empty queue
+    try {
+      CommitQueue queue = new CommitQueue();
+      Commit commit = new Commit("First commit", new ArrayList<>(Arrays.asList("a.java")));
+      queue.enqueue(commit);
+      Commit resultCommit = queue.dequeue();
+      if (!commit.equals(resultCommit)) {
+	System.out.println("EXPECTED " + commit.toString());
+	System.out.println("but got " + resultCommit.toString());
+	result = false;
+      }
+    } catch (Exception e) {
+      System.out.println("Case 3 failed with exception: " + e);
+      result = false;
+    }
+    
     // Case 4: Dequeue from an empty queue
-    return false;
+    
+    try {
+      CommitQueue queue = new CommitQueue();
+      Commit resultCommit = queue.dequeue();
+      if (resultCommit != null) {
+	System.out.println("EXPECTED NULL BUT GOT " + resultCommit.toString());
+	result = false;
+      }
+    } catch (Exception e) {
+      System.out.println("Case 4 failed with exception: " + e);
+      result = false;
+    }
+
+    return result;
   }
 
   /**
@@ -199,17 +255,63 @@ public class VCSTester {
    * @return true if all tests pass
    */
   public static boolean testLinkedIterator() {
-    // TODO
+    boolean result = true;
     // This tester should create a chain of linked nodes directly
     // (e.g., by using the constructor of LinkedNode)
+    LinkedNode<Integer> testHead = new LinkedNode<Integer>(1);
+    LinkedNode<Integer> test1 = new LinkedNode<Integer>(2);
+    
+    LinkedNode<Integer> test2 = new LinkedNode<Integer>(3);
+
+    LinkedNode<Integer> test3 = new LinkedNode<Integer>(4);
+
+    testHead.setNext(
+      test1
+    );
+    
+    test1.setNext(
+      test2
+    );
+
+    test2.setNext(
+      test3
+    );
+
+    test3.setNext(
+      null
+    );
+
+    LinkedIterator<Integer> linkedIterator = new LinkedIterator<>(testHead);
+    
 
     // Case 1: Verify that LinkedIterator visits all nodes
     // in a chain of at least 3 nodes in order
+
+    int sum = 0;
+    while (linkedIterator.hasNext()) {
+      sum += linkedIterator.next();  
+    }
+
+    if (sum != 10) {
+      System.out.println("LinkedIterator fails to visit all nodes");
+      result = false;
+    }
+
     // Case 2: Verify that hasNext returns false after all nodes visited
+    if (linkedIterator.hasNext()) {
+      System.out.println("Expected iterator to return false");
+      result = false;
+    }
+
     // Case 3: Verify that LinkedIterator works on an empty chain
     // (i.e., null start node)
-    
-    return false;
+    LinkedIterator<Integer> emptyIterator = new LinkedIterator<>(null);
+    if (emptyIterator.hasNext()) {
+	System.out.println("Expected iterator to return false");
+	result = false;
+    }
+
+    return result;
   }
 
   /**

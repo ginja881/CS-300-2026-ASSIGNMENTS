@@ -24,7 +24,7 @@ class LinkedIterator<T> implements Iterator<T> {
    * @return true only if the iterator has a "next" element
    */
   public boolean hasNext() {
-    return this.current.getNext() != null;
+    return this.current != null && this.current.getNext() != null;
   }
 
   /**
